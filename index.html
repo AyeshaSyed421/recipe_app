@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Search</title>
+    <style>
+        /* General Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section Styling */
+        .hero-section {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .hero-section p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(to right, #ff6f61, #ff9a9e);
+    -webkit-background-clip: text; /* Highlights text with gradient */
+    -webkit-text-fill-color: transparent; /* Makes text transparent to reveal gradient */
+    background-clip: text; /* For other browsers */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    line-height: 1.4;
+    margin-top: 20px;
+    padding: 15px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+        /* Main Heading */
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-top: 30px;
+        }
+
+        /* Search Form Styling */
+        form {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            outline: none;
+            width: 300px;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff9a9e;
+            box-shadow: 0 0 10px #ff9a9e;
+        }
+
+        input[type="submit"] {
+            padding: 12px 25px;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(to right, #ff6f61, #ff9a9e);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="submit"]:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #e63946, #ff9a9e);
+        }
+
+        /* Recipes List Styling */
+        ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        li {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipe-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+             text-align: center;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: linear-gradient(to right, #ff6f61, #ff9a9e);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        a:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #e63946, #ff9a9e);
+        }
+
+        .no-recipes {
+        font-size: 1.2rem;
+        color: #fff;
+        margin-top: 30px; /* Increased margin for better spacing */
+        text-align: center;
+        display: block;
+        width: 100%;
+    }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 2rem;
+            }
+
+            input[type="text"], input[type="submit"] {
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            ul {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            li {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <p>Discover and explore thousands of recipes to inspire your next meal!</p>
+    </div>
+
+    <!-- Main Heading -->
+    <h1>Recipe Search</h1>
+
+    <!-- Search Form -->
+    <form method="POST" action="/">
+        <input type="text" name="search_query" placeholder="Search for recipes" value="{{ search_query }}">
+        <input type="submit" value="Search">
+    </form>
+
+    <!-- Recipes Section -->
+    {% if recipes %}
+        <ul>
+            {% for recipe in recipes %}
+            <li>
+                <h3 class="recipe-title">{{ recipe.strMeal }}</h3>
+                {% if recipe.strMealThumb %}
+                    <img src="{{ recipe.strMealThumb }}" alt="{{ recipe.strMeal }}">
+                {% endif %}
+                <a href="{{ url_for('view_meal', meal_id=recipe.idMeal) }}">View Recipe</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-recipes">No recipes found.</p>
+    {% endif %}
+</body>
+</html>
